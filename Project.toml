@@ -1,0 +1,10 @@
+name = "WellProductivity"
+uuid = "b8244b2a-f31f-5309-b09f-d34428ac1df9"
+authors = ["Santiago Cuervo <scuervo91@gmail.com>"]
+version = "0.1.0"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
