@@ -60,22 +60,26 @@
        (S, DecTime, DecLine)=Declination(DaysDeclination,RateDeclination)
 
 
+
         @series begin
             seriestype := :path
             linewidth := 5
             seriescolor := :red
+            lab := "Di = $(round(S.Di*365/12,digits=2)) Monthly // $(round(S.Di*365,digits=2)) Yearly"
         DecTime, DecLine
         end
 
         if Forecast!=false
             ForecastTime=DaysDeclination[end]:Dates.Month(1):DaysDeclination[end]+Dates.Month(Mforecast)
             ForecastLine=DeclinationForecast(S,ForecastTime)
+            Np=(ForecastLine[1]-ForecastLine[end])/(-S.Di*1000)
 
         @series begin
             seriestype := :path
             linestyle := :dash
             linewidth := 1
             seriescolor := :red
+                lab := "$(Dates.format(ForecastTime[1],dft))--> $(Dates.format(ForecastTime[end],dft))// Np= $(round(Np,digits=1)) Mbbl))"
         ForecastTime, ForecastLine
         end
 
