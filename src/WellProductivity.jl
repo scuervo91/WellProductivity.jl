@@ -5,6 +5,8 @@ using Dates
 using DataFrames
 using Colors
 using Plots
+using Statistics
+using Distributions
 
 export Reg, DeclinationForecast, Declination
 

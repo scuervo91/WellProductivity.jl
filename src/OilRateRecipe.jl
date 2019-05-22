@@ -47,7 +47,7 @@
         x, z
         end
     end
-    
+
         if Dec==true
         if Drange==false
             DaysDeclination=x
@@ -57,14 +57,14 @@
             RateDeclination=y[(x.>=Drange[1]) .& (x.<=Drange[2])]
         end
 
-       (S, DecLine)=Declination(DaysDeclination,RateDeclination)
+       (S, DecTime, DecLine)=Declination(DaysDeclination,RateDeclination)
 
 
         @series begin
             seriestype := :path
             linewidth := 5
             seriescolor := :red
-        DaysDeclination, DecLine
+        DecTime, DecLine
         end
 
         if Forecast!=false

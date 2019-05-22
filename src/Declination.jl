@@ -1,5 +1,16 @@
-function Declination(Time,Rate)
+function Declination(time,rate)
 
+        #Anomally Detection
+    epsilon=0.05339
+
+    mu=mean(rate)
+    sigma=std(rate)
+    NormRate=map(x->(x-mu)/sigma,rate)
+    pval=map(x->pdf(Normal(),x),NormRate)
+    ev=pval.>epsilon
+    Time=time[ev]
+    Rate=rate[ev]
+        #
         Ti=Dates.days.(Time[1])
         Cum=accumulate(+,Rate)
 
@@ -13,7 +24,7 @@ function Declination(Time,Rate)
 
 
 
-            return S, DecLine
+            return S, Time, DecLine
 
 
 end #End Function
