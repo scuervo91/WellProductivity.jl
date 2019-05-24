@@ -3,11 +3,12 @@
 @recipe function f(h::OilRate; Dlim=false, mrange=6, dft="u yy",
                                 WellName=" ", Liquid=false,
                                 Dec=false, Drange=false,
-                                Forecast=false, Mforecast=12)
+                                Forecast=false, Mforecast=12,
+                                LogRate=false)
                   legend --> false
                   title := "$WellName"
                   ylabel := "Rate [bbl/d]"
-
+                  LogRate ? yaxis :=  :log : yaxis := :none 
 
     if length(h.args)==2
         x, y = h.args
@@ -31,8 +32,9 @@
     @series begin
         seriestype := :path
         linewidth := 3
-        seriescolor := :green
-        label := "Oil Rate [bbl/d]"
+        seriescolor --> :green
+
+        label := " $WellName Oil Rate [bbl/d]"
         x, y
         end
 
@@ -43,7 +45,7 @@
         linewidth := 1
         seriescolor := RGB(0.5, 0.5, 0.5)
         subplot := 1
-        label := "Liquid Rate [bbl/d]"
+        label := " $WellName Liquid Rate [bbl/d]"
         x, z
         end
     end
