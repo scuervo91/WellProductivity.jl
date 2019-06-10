@@ -8,7 +8,7 @@ using Plots
 using Statistics
 using Distributions
 
-export Reg, DeclinationForecast, Declination
+export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow
 
 include("OilRateRecipe.jl")
 include("OilCumRecipe.jl")
@@ -18,6 +18,11 @@ include("BswRecipe.jl")
 include("Reg.jl")
 include("Types.jl")
 include("Declination.jl")
+include("OilInflow.jl")
+include("IPRRecipe")
+include("OilOutflow.jl")
+
+
 
 
 

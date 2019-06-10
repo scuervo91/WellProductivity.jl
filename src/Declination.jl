@@ -1,3 +1,17 @@
+```
+Declination(args...)
+
+Estimate decliantion of a given data set. By default it is applied an Anomaly Dectection
+algorithm to filter the representative data.
+
+The next table show the list of variables allowed:
+
+|PropertyName|Args|Default|Input|Description
+|---|---|---|---|---|
+|Date|Mandatory|--|Array{Date,1}| Array of dates|
+|Rate|Mandatory|--|Array{Number,1}| Array of rates|
+|AD|Optional|AD=true|AD=Bool| Activation of Anomaly detection algorithm|
+```
 function Declination(time,rate; AD=true)
 
         #Anomally Detection

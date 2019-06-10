@@ -1,3 +1,18 @@
+```
+Reg(args...)  -->Plot
+
+Estimate Linear, Exponential and Power regression type
+``Linear\quad \Rightarrow y=mx+b\\ Exponential\quad \Rightarrow y=b{ e }^{ mx }\\ Power\quad \Rightarrow y=b{ x }^{ m }``
+
+The next table show the list of variables allowed:
+
+|PropertyName|Args|Default|Input|Description
+|---|---|---|---|---|
+|x|Mandatory|--|Array{Number,1}| x Data|
+|y|Mandatory|--|Array{Number,1}| y Data|
+|TypeReg|Optional|TypeReg="Linear"|TypeReg= "linear" or "Exponential"  or "Power"|Type of regression|
+|pr|Optional|pr=false|pr=Bool|Print the results of regression|
+```
 function Reg(x,y; TypeReg="Linear", pr=false)
 
     if TypeReg=="Linear"
