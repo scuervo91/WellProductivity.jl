@@ -14,7 +14,8 @@
     @series begin
         seriestype := :path
         line_z := Pr'
-        linecolor --> :grays
+        linecolor --> :black
+        linewidth --> 3
         xformatter := :plain
         q, p
     end

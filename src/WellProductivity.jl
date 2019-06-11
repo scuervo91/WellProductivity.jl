@@ -7,8 +7,9 @@ using Colors
 using Plots
 using Statistics
 using Distributions
+using Interpolations
 
-export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow
+export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow, OilOutflowSen
 
 include("OilRateRecipe.jl")
 include("OilCumRecipe.jl")
@@ -19,9 +20,9 @@ include("Reg.jl")
 include("Types.jl")
 include("Declination.jl")
 include("OilInflow.jl")
-include("IPRRecipe")
+include("IPRRecipe.jl")
 include("OilOutflow.jl")
-
+include("OilOutflowSen.jl")
 
 
 
