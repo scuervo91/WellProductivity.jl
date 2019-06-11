@@ -134,7 +134,7 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
 
     end #End for Qn
       Pwf[count,:].=P[end,:]
-      leg[count]="Thp=$(Thp[k]); Gor=$(Rsi[m]); di=$(di[n])"
+      leg[count]="Thp=$(Thp[k]) psi ; Gor=$(Rsi[m]) scf/bbl; di=$(di[n]) in"
             end
         end
     end

@@ -3,8 +3,8 @@ function OilInflow(pr,J;pb=0,n=10)
     pres=zeros(n,size(pr,1))
     Qrate=zeros(n,size(pr,1)*size(J,1))
     Sat=pr.<=pb
-    qlmax=pr
 
+    leg=Array{String,1}(undef,size(pr,1)*size(J,1))
     count=0
     for p=1:size(pr,1)
 
@@ -13,6 +13,7 @@ function OilInflow(pr,J;pb=0,n=10)
 
         for j=1:size(J,1)
              count=count+1
+             leg[count]="Res. Pressure=$(pr[p]) psi; J=$(J[j]) bbl/d*psi"
             if Sat[p]==1
                Qrate[:,count]=map(pwf->(pr[p]*J[j]/1.8).*(1-0.2*(pwf./pr[p])-0.8*(pwf./pr[p]).^2),pres[:,p])
             else
@@ -25,5 +26,5 @@ function OilInflow(pr,J;pb=0,n=10)
 
 
     end
-    return pres, Qrate
+    return pres, Qrate, leg
 end

@@ -9,7 +9,7 @@ using Statistics
 using Distributions
 using Interpolations
 
-export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow, OilOutflowSen
+export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow, OilOutflowSen, GasInflow
 
 include("OilRateRecipe.jl")
 include("OilCumRecipe.jl")
@@ -23,6 +23,8 @@ include("OilInflow.jl")
 include("IPRRecipe.jl")
 include("OilOutflow.jl")
 include("OilOutflowSen.jl")
+include("GasInflow.jl")
+include("VFPRecipe.jl")
 
 
 
