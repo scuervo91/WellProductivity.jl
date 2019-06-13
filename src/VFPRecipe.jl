@@ -16,3 +16,21 @@ DepthRange, Qrange, Pwf, l=OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Q
         Qrange, Pwf'
     end
     end
+
+@userplot vfpgas
+
+@recipe function f(h::vfpgas; dis=2.99, Tss=80, ∇Ts=1, ϵs=0.0006, Qns=10, Dns=50, tols=0.05, sgs=0.6, Incs=0)
+
+    Depth,Thp,GasPVT, Qmax=h.args
+
+DepthRange, Qrange, Pwf, leg = OutflowGas(Depth,Thp,GasPVT, Qmax; di=dis, Ts=Tss, ∇T=∇Ts, ϵ=ϵs, Qn=Qns, Dn=Dns, tol=tols, sg=sgs, Inc=Incs)
+
+xlabel --> "Rate [Mscfd]"
+ylabel --> "Pwf [psi]"
+xformatter --> :plain
+label --> leg
+@series begin
+    seriestype := :path
+    Qrange, Pwf'
+end
+end

@@ -2,7 +2,12 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
 
     # Create the range of Depth and Rates
     DepthRange=range(0, stop=Depth, length=Dn)
-    Qrange=range(100, stop=Qmax, length=Qn)
+    if size(Qmax,1)==1
+        Qrange=range(100, stop=Qmax, length=Qn)
+    else
+        Qrange=Qmax
+        Qn=size(Qmax,1)
+    end
 
     #Size of sensibilities
     Thpn=size(Thp,1)

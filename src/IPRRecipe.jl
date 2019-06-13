@@ -27,11 +27,11 @@ end
 
     Pr, J, PVT=h.args
 
-    p, q=GasInflow(Pr,J,PVT,n=N)
+    p, q, l=GasInflow(Pr,J,PVT,n=N)
 
     xlabel --> "Gas rate [Mscf/d]"
     ylabel := "Pwf [psi]"
-    legend --> false
+    label --> l
     linecolor --> :red
     xformatter := :plain
     @series begin
