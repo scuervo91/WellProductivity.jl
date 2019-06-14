@@ -8,7 +8,7 @@ function OilInflow(pr,J;pb=0,n=10)
     count=0
     for p=1:size(pr,1)
 
-        pres[:,p]=range(0,stop=pr[p],length=n)
+        pres[:,p]=range(0,stop=pr[p]-50,length=n)
 
 
         for j=1:size(J,1)

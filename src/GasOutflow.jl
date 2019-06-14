@@ -1,4 +1,4 @@
-function OutflowGas(Depth,Thp,GasPVT, Qmax; di=2.99, Ts=80, ∇T=1, ϵ=0.0006, Qn=10, Dn=50, tol=0.05, sg=0.6, Inc=0)
+function GasOutflow(Depth,Thp,GasPVT, Qmax; di=2.99, Ts=80, ∇T=1, ϵ=0.0006, Qn=10, Dn=50, tol=0.05, sg=0.6, Inc=0)
 
     # Create the range of Depth and Rates
     DepthRange=range(0, stop=Depth, length=Dn)

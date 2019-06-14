@@ -23,7 +23,7 @@ DepthRange, Qrange, Pwf, l=OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Q
 
     Depth,Thp,GasPVT, Qmax=h.args
 
-DepthRange, Qrange, Pwf, leg = OutflowGas(Depth,Thp,GasPVT, Qmax; di=dis, Ts=Tss, ∇T=∇Ts, ϵ=ϵs, Qn=Qns, Dn=Dns, tol=tols, sg=sgs, Inc=Incs)
+DepthRange, Qrange, Pwf, leg = GasOutflow(Depth,Thp,GasPVT, Qmax; di=dis, Ts=Tss, ∇T=∇Ts, ϵ=ϵs, Qn=Qns, Dn=Dns, tol=tols, sg=sgs, Inc=Incs)
 
 xlabel --> "Rate [Mscfd]"
 ylabel --> "Pwf [psi]"

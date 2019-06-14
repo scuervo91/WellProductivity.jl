@@ -30,7 +30,7 @@ function GasInflow(pr,J,GasPVT;n=10)
     count=0
     for p=1:size(pr,1)
 
-        pres[:,p]=range(14.7,stop=pr[p],length=n)
+        pres[:,p]=range(14.7,stop=pr[p]-50,length=n)
 
         for j=1:size(J,1)
     count=count+1
