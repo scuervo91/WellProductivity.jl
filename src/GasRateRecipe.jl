@@ -16,15 +16,24 @@ The next table show the list of variables allowed:
 
 @userplot GasRate
 
-@recipe function f(h::GasRate; Dlim=false, mrange=6, dft="u yy")
+@recipe function f(h::GasRate; Dlim=false, Monthly=true ,mrange=6,  dft="u yy")
                   legend --> false
                   x, y = h.args
 
     if Dlim==false
-        r = x[1]:Dates.Month(mrange):x[end]
+        if Monthly==true
+          r = x[1]:Dates.Month(mrange):x[end]
+      else
+         r = x[1]:Dates.Day(mrange):x[end]
+       end
         d = Dates.format.(r,dft)
     else
+        if Monthly==true
         r = Dlim[1]:Dates.Month(mrange):Dlim[2]
+    else
+        r= Dlim[1]:Dates.Day(mrange):Dlim[2]
+
+    end
         d = Dates.format.(r,dft)
     end
 
