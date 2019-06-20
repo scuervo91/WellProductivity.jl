@@ -37,7 +37,7 @@ The next table show the list of variables allowed:
                                 Ad=true, EconLimit=false)
                   legend --> false
                   ylabel := "Rate [bbl/d]"
-                  
+
 
     if length(h.args)==2
         x, y = h.args
@@ -70,6 +70,8 @@ The next table show the list of variables allowed:
         else
             f=x[end]+Dates.Month(1)
         end
+    else 
+        f=x[end]+Dates.Month(1)
     end
 
 
@@ -90,7 +92,7 @@ The next table show the list of variables allowed:
         linewidth := 3
         seriescolor --> :green
 
-        label := " $WellName Oil Rate [bbl/d]"
+        label := "Oil Rate [bbl/d]"
         x, y
         end
 
@@ -101,7 +103,7 @@ The next table show the list of variables allowed:
         linewidth := 1
         seriescolor := RGB(0.5, 0.5, 0.5)
         subplot := 1
-        label := " $WellName Liquid Rate [bbl/d]"
+        label := "Liquid Rate [bbl/d]"
         x, z
         end
     end

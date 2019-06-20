@@ -20,7 +20,7 @@ The next table show the list of variables allowed:
                   x, y = h.args
 
     if Dlim==false
-        r = x[1]:Dates.Month(mrange):x[end]
+        r = x[1]:Dates.Month(mrange):x[end]+Dates.Month(1)
         d = Dates.format.(r,dft)
     else
         r = Dlim[1]:Dates.Month(mrange):Dlim[2]
