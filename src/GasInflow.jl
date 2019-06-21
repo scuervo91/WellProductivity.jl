@@ -6,7 +6,7 @@ function GasInflow(pr,J,GasPVT;n=10)
     #Integral Matrix
     Integral = DataFrame()
 
-    #Traslate Pressure to Integrate Matrix
+    #Trasnsfer Pressure to Integrate Matrix
     Integral.P= GasPVT.P[2:end]
 
     #Pressure Differences

@@ -99,3 +99,71 @@ p1=oilrate(p.Datee, p.OilRate, p.LiquidRate, Dlim=l, ylim=(0,300), mrange=3, Dec
 plot(p1,p2, layout=(2,1), title=["Economic Limit Forecast" "Fixed Time Forecast"])
 ```
 <img src="WellProductivity_EX5.PNG"><br>
+
+## Well Productivity Analysis - Inflow & Outflow curves
+
+Oil and gas wells productivity index and vertical flow performance curves can be calculated to establish operation points. sensibitities can be applied in order to visualize the impact on production under risk operations.
+
+### IPR
+
+Oil IPR can be plotted with the ```iproil``` recipe by giving Reservoir Pressure and PI. Optionally the bubble point can be set in order to apply the Vogel Correlation.
+
+For Pwf>Pb
+`` Q=J\quad \Delta P ``
+
+for Pwf<= Pb
+
+`` Q={ Q }_{ max }\left[ 1-0.2\left( \frac { Pwf }{ Pb }  \right) -0.8{ \left( \frac { Pwf }{ Pb }  \right)  }^{ 2 } \right]  ``
+
+```julia
+l=@layout[a b ; c]
+p1=iproil(1300,2.5,Pb=600, title="Vogel Correlation Pwf<Pb")
+p2=iproil(1300,2.5, title="Linear Productivity Index")
+p3=iproil([3400, 3600],[10, 15],Pb=1000, title="Sensibilities on Pressure and PI")
+plot(p1,p2,p3, layout=l, size=(800,600), legendfontsize=6)
+```
+<img src="WellProductivity_EX6.PNG"><br>
+
+Gas IPR can be plotted with the ```iprgas``` recipe by giving Reservoir Pressure, Pi and a tabulated Gas PVT. The recipe does not approximate the solution according with the pressure regions, instead it calculates the Real-Gas Pseudopressure in the range of the iprgas
+
+`` { Q }_{ g }=J\quad \left( { \psi  }_{ r }-{ \psi  }_{ w } \right)  ``
+
+Where  
+
+`` \psi =m(p)=\int _{ 0 }^{ p }{ \frac { 2p }{ { \mu  }_{ g }\quad Z }  } dp ``
+
+```julia
+GasPVT=CSV.read("GasPVT.csv")
+first(GasPVT,10)
+```
+<img src="WellProductivity_EX7.PNG"><br>
+
+
+You also can apply some sensibilities to the reservoir pressure and Pi of the gas.
+```julia
+iprgas([1100,1200],[0.9e-4, 1.4e-4],GasPVT, legendfontsize=6)
+```
+<img src="WellProductivity_EX8.PNG"><br>
+
+### VFP
+
+The Oil vertical Flow Performance curve is calculated through The Modified Hagedorn and Brown Method.
+
+```julia
+p1=vfpoil(5500,[50,70],0.5,OilPVT,GasPVT,WaterPVT, 1500, dis=2.99, title="Thp Sensibility")
+p2=vfpoil(5500,50,[0.5,0.7],OilPVT,GasPVT,WaterPVT, 1500, dis=2.99,title="Bsw Sensibility")
+p3=vfpoil(5500,50,0.7,OilPVT,GasPVT,WaterPVT, 1500, dis=[2.99,3.5],title="Tubing Diameter Sensibility")
+p4=vfpoil(5500,50,0.7,OilPVT,GasPVT,WaterPVT, 1500, dis=2.99,GORs=[300,600],title="GOR sensibility")
+
+plot(p1,p2,p3,p4, layout=4, legendfontsize=6, size=(800,600))
+```
+
+<img src="WellProductivity_EX9.PNG"><br>
+
+You could plot the IPR and VFP in a single plotted
+
+```julia
+iproil([1000, 1200],[1.5,2],Pb=2100)
+vfpoil!(5500,[50,70],0.5,OilPVT,GasPVT,WaterPVT, 1500, legend=false)
+```
+<img src="WellProductivity_EX10.PNG"><br>

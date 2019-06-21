@@ -32,7 +32,6 @@ end
     xlabel --> "Gas rate [Mscf/d]"
     ylabel := "Pwf [psi]"
     label --> l
-    linecolor --> :red
     xformatter := :plain
     @series begin
         seriestype := :path

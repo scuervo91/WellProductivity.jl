@@ -13,6 +13,7 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
     Thpn=size(Thp,1)
     gorn=size(GOR,1)
     din=size(di,1)
+    bswn=size(Bsw,1)
 
     #Create the interpolations function for PVT
     ## Oil
@@ -43,13 +44,14 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
     #Calculate variables
     GOR==false ? Rsi=maximum(OilPVT.Rs) : Rsi=GOR
 
-    leg=Array{String,1}(undef,Thpn*gorn*din)
-    Pwf=zeros(Thpn*gorn*din,Qn)
+    leg=Array{String,1}(undef,Thpn*gorn*din*bswn)
+    Pwf=zeros(Thpn*gorn*din*bswn,Qn)
 
     count=0
     for k=1:Thpn  #Loop for Thp
         for m=1:gorn #Loop for Gor
             for n=1:din #Loop for Diameter
+                for o=1:bswn
             count=count+1
         #Create Variables
     ql=zeros(Qn)     #Vector of Liquid rate
@@ -62,14 +64,14 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
     ∇Pnew=0.0        #Reset Gradient Value
     TransArea=π*(di[n]/(12*2))^2  #Transversal Area [Ft2]
     P[1,:].=Thp[k]       #Initial pressure is Thp
-    ∇P[1,:].=(ρo(Thp[k])*(1-Bsw)+ρw(Thp[k])*Bsw)*(0.433/62.4)         #Initial PRessure gradient is the average density
+    ∇P[1,:].=(ρo(Thp[k])*(1-Bsw[o])+ρw(Thp[k])*Bsw[o])*(0.433/62.4)         #Initial PRessure gradient is the average density
 
     #General Loop for each Rate
     for j=1:Qn
 
         #Calculate Liquid Velocities
         ql[j]=Qrange[j]*(5.615/86400)           #Liquid Rate [ft3/s]
-        qo[j]=(Qrange[j]*(1-Bsw))*(5.615/86400) #Oil Rate [ft3/s]
+        qo[j]=(Qrange[j]*(1-Bsw[o]))*(5.615/86400) #Oil Rate [ft3/s]
         usl[j]=ql[j]/TransArea                  #Liquid Velocity [ft/s]
 
         #General Loop for each depth
@@ -85,9 +87,9 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
              FreeGas=(Rsi[m]-Rs[Pguess])*qo[j]                                            #Estimate FreeGas Rate [scf/d]
              usg= (4*FreeGas*Z(Pguess)*(460+T(DepthRange[i]))*14.7)/(Pguess*520*π*(di[n]/12)^2)  #Estimate Gas Velocity
              um[i]=usg+usl[j]  #Total Velocity
-             σl= (σo(Pguess)*(1-Bsw)+σw(Pguess)*Bsw)
-             ρl= (ρo(Pguess)*(1-Bsw)+ρw(Pguess)*Bsw)                                   #Liquid Density Lbm/ft3
-             μl= (μo(Pguess)*(1-Bsw)+μw(Pguess)*Bsw)                                   #Liquid Viscosity [Cp]
+             σl= (σo(Pguess)*(1-Bsw[o])+σw(Pguess)*Bsw[o])
+             ρl= (ρo(Pguess)*(1-Bsw[o])+ρw(Pguess)*Bsw[o])                                   #Liquid Density Lbm/ft3
+             μl= (μo(Pguess)*(1-Bsw[o])+μw(Pguess)*Bsw[o])                                   #Liquid Viscosity [Cp]
              λg=usg/um[i]
              LBi=1.071-0.2218*(um[i]^2 /(di[n]/12))
              LBi>=0.13 ? LB=LBi : LB=0.13
@@ -139,11 +141,11 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
 
     end #End for Qn
       Pwf[count,:].=P[end,:]
-      leg[count]="Thp=$(Thp[k]) psi ; Gor=$(Rsi[m]) scf/bbl; di=$(di[n]) in"
+      leg[count]="Thp=$(Thp[k]) psi ; Bsw=$(Bsw[o]); Gor=$(Rsi[m]) scf/bbl; di=$(di[n]) in"
+                end
             end
         end
     end
-
     return DepthRange, Qrange, Pwf, leg
 
     end #End Function
