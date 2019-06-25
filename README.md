@@ -160,10 +160,39 @@ plot(p1,p2,p3,p4, layout=4, legendfontsize=6, size=(800,600))
 
 <img src="WellProductivity_EX9.PNG"><br>
 
-You could plot the IPR and VFP in a single plotted
+You could plot the IPR and VFP in a single plot
 
 ```julia
 iproil([1000, 1200],[1.5,2],Pb=2100)
 vfpoil!(5500,[50,70],0.5,OilPVT,GasPVT,WaterPVT, 1500, legend=false)
 ```
 <img src="WellProductivity_EX10.PNG"><br>
+
+The Gas vertical flow  permformance is estimed trough the energy balance for compressible fluids.
+
+```julia
+p1=vfpgas(5500,collect(500:100:700),GasPVT, 12000, title="Thp Sensibility")
+p2=vfpgas(5500,650,GasPVT, 12000, dis=[2.99,3.5], title="Pipe diameter Sensibility")
+plot(p1,p2, layout=(1,2), size=(800,400))
+```
+<img src="WellProductivity_EX11.PNG"><br>
+
+You could plot the IPR and VFP in a single plot
+
+```julia
+iprgas([1100,1200],0.9e-4,GasPVT)
+vfpgas!(5500,collect(500:50:700),GasPVT, 12000, legend=false)
+```
+<img src="WellProductivity_EX13.PNG"><br>
+
+
+### Operation Point Estimation
+
+There are cases where you what to estimate de operation point at certain conditions. With the Recipes ```oilnodal``` and ```gasnodal``` you can estimate the operation point to a given Inflow and Outflow parameters.
+
+```julia
+p1=oilnodal(1800,2,5500,80,0.9,OilPVT,GasPVT,WaterPVT, Pbs=2100, ns=30 , title="Oil Well Operation Point")
+p2=gasnodal(1200,0.9e-4, 5500,350,GasPVT, title="Gas Well Operation Point")
+plot(p1,p2, layout=(1,2),size=(900,400))
+```
+<img src="WellProductivity_EX12.PNG"><br>
