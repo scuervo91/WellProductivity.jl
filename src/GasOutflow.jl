@@ -29,6 +29,7 @@ function GasOutflow(Depth,Thp,GasPVT, Qmax; di=2.99, Ts=80, ∇T=1, ϵ=0.0006, Q
 
     #create variables
     Pwf=zeros(Thpn*din,Qn)
+    Pprofile=zeros(Dn,Qn,Thpn*din)
     angle=90 .- fill(Inc,Dn)
     leg=Array{String,1}(undef,Thpn*din)
        count=0
@@ -69,9 +70,10 @@ function GasOutflow(Depth,Thp,GasPVT, Qmax; di=2.99, Ts=80, ∇T=1, ϵ=0.0006, Q
 
                 end #End Loop Rate
              Pwf[count,:].=P[end,:]
+             Pprofile[:,:,count]=P
              leg[count]="Thp=$(Thp[k]); di=$(di[n])"
          end #End Loop Diameter
 
     end #End Loop Thp
-    return DepthRange, Qrange, Pwf, leg
+    return DepthRange, Qrange, Pwf, leg, Pprofile
       end #End Function

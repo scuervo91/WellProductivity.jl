@@ -46,6 +46,7 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
 
     leg=Array{String,1}(undef,Thpn*gorn*din*bswn)
     Pwf=zeros(Thpn*gorn*din*bswn,Qn)
+    Pprofile=zeros(Dn,Qn,Thpn*gorn*din*bswn)
 
     count=0
     for k=1:Thpn  #Loop for Thp
@@ -141,11 +142,12 @@ function OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qmax;ϵ=0.0006, Ts=
 
     end #End for Qn
       Pwf[count,:].=P[end,:]
+      Pprofile[:,:,count]=P
       leg[count]="Thp=$(Thp[k]) psi ; Bsw=$(Bsw[o]); Gor=$(Rsi[m]) scf/bbl; di=$(di[n]) in"
                 end
             end
         end
     end
-    return DepthRange, Qrange, Pwf, leg
+    return DepthRange, Qrange, Pwf, leg, Pprofile
 
     end #End Function

@@ -8,7 +8,7 @@
 
     pres, Qrate, legI=GasInflow(pr,J,GasPVT,n=ns)
 
-    DepthRange, Qrange, Pwf, legO=GasOutflow(Depth,Thp,GasPVT, Qrate; di=dis, Ts=Tss, ∇T=∇Ts, ϵ=ϵs, Dn=Dns, tol=tols, sg=sgs, Inc=Incs)
+    DepthRange, Qrange, Pwf, legO, P=GasOutflow(Depth,Thp,GasPVT, Qrate; di=dis, Ts=Tss, ∇T=∇Ts, ϵ=ϵs, Dn=Dns, tol=tols, sg=sgs, Inc=Incs)
 
     difabs=abs.(pres.-Pwf')
     dif=pres.-Pwf'
@@ -62,7 +62,7 @@ end
 
     pres, Qrate, legI=OilInflow(pr,J,pb=Pbs,n=ns)
 
-    DepthRange, Qrange, Pwf, legO=OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qrate;ϵ=ϵs, Ts=Tss, ∇T=∇Ts, GOR=GORs, di=dis,  Dn=Dns, tol=tols, sg=sgs)
+    DepthRange, Qrange, Pwf, legO, P=OilOutflowSen(Depth,Thp,Bsw,OilPVT,GasPVT,WaterPVT, Qrate;ϵ=ϵs, Ts=Tss, ∇T=∇Ts, GOR=GORs, di=dis,  Dn=Dns, tol=tols, sg=sgs)
 
     difabs=abs.(pres.-Pwf')
     dif=pres.-Pwf'
