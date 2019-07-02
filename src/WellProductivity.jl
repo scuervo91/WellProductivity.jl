@@ -8,7 +8,7 @@ using Plots
 using Statistics
 using Distributions
 using Interpolations
-using Polinomials
+using Polynomials
 
 export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow, OilOutflowSen, GasInflow, GasOutflow, EspPerformance, EspTornado
 

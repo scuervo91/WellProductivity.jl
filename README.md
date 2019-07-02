@@ -6,25 +6,25 @@ This package is being designed among others to provide Petroleum Engineering too
 
 There are five topics in which the project is going to be focused on:
 
-<br>-Geoscience* (Current Package)
+<br>-Geoscience
 <br>-Reservoir
-<br>-Production
+<br>-Production (Current Package)
 <br>-Economics
 <br>-Integration
 
-<br> The package will always be in permanent development and open to suggestions to enhance the program. As the code has been written so far by a code enthusiastic Petroleum Engineer I hope to learn as much as possible to get better and usefull programs.
+<br> The package will always be in permanent development and open to suggestions to enhance the program. As the code has been written so far by a code enthusiastic Petroleum Engineer I hope to learn as much as possible to get better and useful programs.
 
 ## WellProductivity.jl Description  
 WellProductivity.jl is a package to perform well productivity analysis (Oil and Gas) such as Decline curve analysis,  
 artificial lift system design and performance.
 
-Given some timeseries data of well production you can estimate the decline rate as well as the forecast to either a given time or economic limit. The Recipe Function include an Anomally Detection Algorithm to detect those points which are not represetative for the Decline Analysis, such as production stops etc...
+Given some time series data of well production you can estimate the decline rate as well as the forecast to either a given time or economic limit. The Recipe Function include an Anomaly Detection Algorithm to detect those points which are not representative for the Decline Analysis, such as production stops etc...
 
-You can visualize inflow and outflow curves, operation points and some sensibitities that affect the performance of the curves.   
+You can visualize inflow and outflow curves, operation points and some sensibilities that affect the performance of the curves.   
 
 ### Tutorial  
 
-Load Packages requiered
+Load Packages required
 ```julia
 using SQLite
 using CSV
@@ -196,3 +196,76 @@ p2=gasnodal(1200,0.9e-4, 5500,350,GasPVT, title="Gas Well Operation Point")
 plot(p1,p2, layout=(1,2),size=(900,400))
 ```
 <img src="WellProductivity_EX12.PNG"><br>
+
+
+## ALS analysis
+
+### Electric Submersible Pump (ESP)
+
+You can visualize ESP curve performance of any pump included in the database. You can easily use any pump by providing the next information in a DataFrame. The Head Performance and the Power are described by Polynomials coefficients at stage reference (Usually 1 Stage) and Frequency Reference (Usually 60 Hz). In the next file is the initial ESP catalogue which you can contribute by adding the pump parameters you have.
+```julia
+:Manufacter
+:Series
+:Model
+:MinCsg
+:RefFreq
+:RefStg
+:Min
+:BEP
+:Max
+:AOF
+:H0
+:H1
+:H2
+:H3
+:H4
+:H5
+:H6
+:P0
+:P1
+:P2
+:P3
+:P4
+:P5
+:P6
+```
+
+The Head and Power Polynomials coefficients are evaluated through Polynomial.jl Package.
+
+Example:
+
+By default the ESP performance curve is evaluated at Reference Stange and Frecuency, usually 1 stage and 60 Hz.
+```julia
+espplott(ctg[6,:],1)
+```
+<img src="WellProductivity_EX14.PNG"><br>
+
+You can also specify the Stages number and the Frequency you want.
+
+```julia
+espplott(ctg[15,:],1,stg=59, fq=32)
+```
+<img src="WellProductivity_EX15.PNG"><br>
+
+Besides, you can also evaluate the pump according with any well productivity, by providing information of Inflow and Outflow.
+
+Example:
+
+Evaluate the ESP Macth in a well with the next parameters
+
+Pump series 538 7000 bbl/d
+Stages:  59
+Reservoir Pressure: 3600 psi  
+Productivity : 20 bbl/d-psi  
+Given Oil-Water-Gas Black Oil GasPVT
+Well Head Pressure: 200 psi  
+Pump Depth : 4040 ft
+Perforates Depth : 8365 ft
+Liquid Rate: 6000 bbl/d
+Pupm Frequency: 43 Hz
+Bsw: 95%
+
+```julia
+espmatch(ctg[15,:], 3600, 20, OilPVT, GasPVT, WaterPVT, 200, 4039, 8365, 6000, 0.9590, stg=59, fq=43)
+```
+<img src="WellProductivity_EX16.PNG"><br>
