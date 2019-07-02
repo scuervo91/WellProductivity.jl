@@ -8,8 +8,9 @@ using Plots
 using Statistics
 using Distributions
 using Interpolations
+using Polinomials
 
-export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow, OilOutflowSen, GasInflow, GasOutflow
+export Reg, DeclinationForecast, Declination, OilInflow, OilOutflow, OilOutflowSen, GasInflow, GasOutflow, EspPerformance, EspTornado
 
 include("OilRateRecipe.jl")
 include("OilCumRecipe.jl")
@@ -27,6 +28,12 @@ include("GasInflow.jl")
 include("VFPRecipe.jl")
 include("GasOutflow.jl")
 include("NodalRecipe.jl")
+include("EspPerformance.jl")
+include("EspTornado.jl")
+include("EspRecipes.jl")
+
+
+
 
 
 

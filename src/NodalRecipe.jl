@@ -82,10 +82,10 @@ end
         op_p=((pres[i+1,1]-pres[i,1])/(dif[i+1,1]-dif[i,1]))*(-dif[i,1])+pres[i,1]
     end
     println("Pressure $op_p , rate $op_l")
-    le=vcat(legI,legO,"Operatiion Point")
+    le=vcat(legI,legO,"Operation Point")
     legend := :bottomleft
     label := le
-
+    xformatter := :plain
     @series begin
         seriestype := :path
 
