@@ -113,9 +113,9 @@ For Pwf>Pb
 
 for Pwf<= Pb
 
-```math
-Q={ Q }_{ max }\left[ 1-0.2\left( \frac { Pwf }{ Pb }  \right) -0.8{ \left( \frac { Pwf }{ Pb }  \right)  }^{ 2 } \right]
-```
+
+$ Q={ Q }_{ max }\left[ 1-0.2\left( \frac { Pwf }{ Pb }  \right) -0.8{ \left( \frac { Pwf }{ Pb }  \right)  }^{ 2 } \right] $
+
 
 ```julia
 l=@layout[a b ; c]
