@@ -109,11 +109,11 @@ Oil and gas wells productivity index and vertical flow performance curves can be
 Oil IPR can be plotted with the ```iproil``` recipe by giving Reservoir Pressure and PI. Optionally the bubble point can be set in order to apply the Vogel Correlation.
 
 For Pwf>Pb
-`` Q=J\quad \Delta P ``
+``Q=J\quad \Delta P``
 
 for Pwf<= Pb
 
-`` Q={ Q }_{ max }\left[ 1-0.2\left( \frac { Pwf }{ Pb }  \right) -0.8{ \left( \frac { Pwf }{ Pb }  \right)  }^{ 2 } \right]  ``
+``Q={ Q }_{ max }\left[ 1-0.2\left( \frac { Pwf }{ Pb }  \right) -0.8{ \left( \frac { Pwf }{ Pb }  \right)  }^{ 2 } \right]``
 
 ```julia
 l=@layout[a b ; c]
