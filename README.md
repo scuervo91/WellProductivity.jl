@@ -109,12 +109,12 @@ Oil and gas wells productivity index and vertical flow performance curves can be
 Oil IPR can be plotted with the ```iproil``` recipe by giving Reservoir Pressure and PI. Optionally the bubble point can be set in order to apply the Vogel Correlation.
 
 For Pwf>Pb
-<img src="WellProductivity_EQ2.PNG"><br>
+<img src="WellProductivity_EQ2.png"><br>
 
 for Pwf<= Pb
 
 
-<img src="WellProductivity_EQ1.PNG"><br>
+<img src="WellProductivity_EQ1.png"><br>
 
 
 ```julia
@@ -128,11 +128,11 @@ plot(p1,p2,p3, layout=l, size=(800,600), legendfontsize=6)
 
 Gas IPR can be plotted with the ```iprgas``` recipe by giving Reservoir Pressure, Pi and a tabulated Gas PVT. The recipe does not approximate the solution according with the pressure regions, instead it calculates the Real-Gas Pseudopressure in the range of the iprgas
 
-<img src="WellProductivity_EQ3.PNG"><br>
+<img src="WellProductivity_EQ3.png"><br>
 
 Where,  
 
-<img src="WellProductivity_EQ4.PNG"><br>
+<img src="WellProductivity_EQ4.png"><br>
 
 ```julia
 GasPVT=CSV.read("GasPVT.csv")
