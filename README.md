@@ -1,3 +1,5 @@
+<img src="WellProductivity-Logo.png"><br>
+
 # WellProductivity
 
 ## Introduction
