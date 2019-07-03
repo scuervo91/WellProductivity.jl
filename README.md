@@ -130,7 +130,7 @@ Gas IPR can be plotted with the ```iprgas``` recipe by giving Reservoir Pressure
 
 <img src="WellProductivity_EQ3.PNG"><br>
 
-Where  
+Where,  
 
 <img src="WellProductivity_EQ4.PNG"><br>
 
