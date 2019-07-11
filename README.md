@@ -251,6 +251,14 @@ espplott(ctg[15,:],1,stg=59, fq=32)
 ```
 <img src="WellProductivity_EX15.PNG"><br>
 
+The performance curves can be corrected by viscosity providing the Viscosity in cSt
+
+```julia
+espplott(ctg[8,:],1,stg=1, fq=60,VisCor=true,μ=25)
+```
+
+<img src="WellProductivity_EX17.PNG"><br>
+
 Besides, you can also evaluate the pump according with any well productivity, by providing information of Inflow and Outflow.
 
 Example:

@@ -1,4 +1,4 @@
-function EspPerformance(EspPump; ns=15, stgs=false, fqs=false)
+function EspPerformance(EspPump; ns=15, stgs=false, fqs=false, VisCors=false, μs=1)
 
     stgs==false ? Stages=EspPump.RefStg : Stages=stgs
     fqs==false ? Freq=EspPump.RefFreq : Freq=fqs
@@ -19,7 +19,7 @@ function EspPerformance(EspPump; ns=15, stgs=false, fqs=false)
 
     CapMin=EspPump.Min.*(Freq/EspPump.RefFreq)
     CapMax=EspPump.Max.*(Freq/EspPump.RefFreq)
-    
+
     HeadMin=HeadEq(EspPump.Min).*Stages.*(Freq/EspPump.RefFreq).^2
     HeadMax=HeadEq(EspPump.Max).*Stages.*(Freq/EspPump.RefFreq).^2
 
@@ -31,6 +31,35 @@ function EspPerformance(EspPump; ns=15, stgs=false, fqs=false)
 
     Cone=DataFrame(heads=[HeadMin,HeadMax], caps=[CapMin,CapMax])
 
-    return CapRange, Head, EspPower, η, Cone, Stages, Freq
+    #Viscosity Corrections
+    if VisCors==true
+    Hbep=LinearInterpolation(CapRange, Head)
+    EffInter=LinearInterpolation(CapRange, η)
+    PowInt=LinearInterpolation(CapRange, EspPower)
+
+    Qb=EspPump[:BEP]
+    Hb=Hbep(Qb)
+    y=-112.1374+6.6504*log(Hb)+12.8429*log(Qb)
+    qp=exp((39.5276+26.5605*log(μs)-y)/(51.6565))
+    Cq=1-4.0327e-3*qp-1.72401e-4*qp^2            #Rate correction factor
+    Ceff=1-3.3075e-2*qp-2.887510e-4*qp^2           #Efficiency Corrections factor
+
+    #Head correction factor
+    Qc=[0,0.6,0.8,1,1.2,EspPump.AOF/Qb]
+    Qi=Qb .* Qc
+
+    CapCorrected=Qi.*Cq
+    ηCorrected=map(x->EffInter(x).*Ceff,Qi)
+
+    H1=[0,-3.68e-3,-4.4723e-3,-7.0076e-3,-9.01e-3,0]
+    H2=[0,-4.36001e-5,-4.18e-5001,-1.41001e-5,1.31001e-5,0]
+    HeadCorrected=map((x,h1,h2)->Hbep(x)*(1+h1*qp+h2*qp^2),Qi,H1,H2)
+    PowerCorrected=map((x,h1,h2)->PowInt(x)*(1+h1*qp+h2*qp^2)*Cq/Ceff,Qi,H1,H2)
+else
+    CapCorrected=HeadCorrected=ηCorrected=PowerCorrected=zeros(6)
+
+    end
+
+    return CapRange, Head, EspPower, η, Cone, Stages, Freq, CapCorrected, HeadCorrected, ηCorrected, PowerCorrected
 
 end

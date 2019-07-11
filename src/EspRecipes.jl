@@ -1,10 +1,10 @@
 @userplot espplott
 
 @recipe function f(h::espplott;
-        n=15, stg=false, fq=false)
+        n=15, stg=false, fq=false, VisCor=false,μ=1)
      Esp, x = h.args
 
-   CapRange, Head, EspPower, η, Cone, Stages, Freq = EspPerformance(Esp,ns=n,stgs=stg, fqs=fq)
+   CapRange, Head, EspPower, η, Cone, Stages, Freq, CapCorrected, HeadCorrected, ηCorrected, PowerCorrected = EspPerformance(Esp,ns=n,stgs=stg, fqs=fq, VisCors=VisCor, μs=μ)
 
 
     xformatter := :plain
@@ -14,6 +14,43 @@
     size := (800,600)
     legendfontsize := 6
     xlim:=(0,Esp.AOF)
+    if VisCor==true
+        @series begin
+            seriestype := :path
+            linestyle := :dash
+            linewidth := 1
+            linecolor := :darkblue
+            marker := :hexagon
+            markercolor := :blue
+            subplot :=1
+            label := "Head Corrected"
+            CapCorrected, HeadCorrected
+        end
+
+        @series begin
+            seriestype := :path
+            linestyle := :dash
+            linewidth := 1
+            linecolor := :darkblue
+            marker := :hexagon
+            markercolor := :black
+            subplot :=2
+            label := "Eff Corrected"
+            CapCorrected, ηCorrected
+        end
+        @series begin
+            seriestype := :path
+            linestyle := :dash
+            linewidth := 1
+            linecolor := :darkgreen
+            marker := :hexagon
+            markercolor := :green
+            subplot :=3
+            label := "Power Corrected"
+            CapCorrected, PowerCorrected
+        end
+
+    end
     @series begin
         seriestype := :path
         linewidth := 2
@@ -42,6 +79,7 @@
         titlefontsize := 8
         Cone.caps
     end
+
 
     @series begin
         seriestype := :path
