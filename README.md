@@ -257,7 +257,7 @@ The performance curves can be corrected by viscosity providing the Viscosity in 
 espplott(ctg[8,:],1,stg=1, fq=60,VisCor=true,μ=25)
 ```
 
-<img src="WellProductivity_EX17.PNG"><br>
+<img src="WellProductivity_EX17.png"><br>
 
 Besides, you can also evaluate the pump according with any well productivity, by providing information of Inflow and Outflow.
 
