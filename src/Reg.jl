@@ -10,7 +10,7 @@ The next table show the list of variables allowed:
 |---|---|---|---|---|
 |x|Mandatory|--|Array{Number,1}| x Data|
 |y|Mandatory|--|Array{Number,1}| y Data|
-|TypeReg|Optional|TypeReg="Linear"|TypeReg= "linear" or "Exponential"  or "Power"|Type of regression|
+|TypeReg|Optional|TypeReg="Linear"|TypeReg= "linear" or "Exponential"  or "Power" or "Logarithmic"|Type of regression|
 |pr|Optional|pr=false|pr=Bool|Print the results of regression|
 ```
 function Reg(x,y; TypeReg="Linear", pr=false)
@@ -44,6 +44,15 @@ function Reg(x,y; TypeReg="Linear", pr=false)
 
         pr ? println(" **Power Regression \n form y = b x^(m) \n m=$m \n b=$b \n r2=$R2") : :none
         return m, b,R2
+    elseif TypeReg=="Logarithmic"
+        m=(mean(log10.(x))*mean(y)-mean(log10.(x).*y))/(mean(log10.(x))^2-mean(log10.(x).^2))
+        b=mean(y)-m*mean(log10.(x))
+        SELine=sum(map((X,Y)->((X*m+b)-Y)^2,log10.(x),y))
+        SEYmean=sum(map(Y->(Y-mean(y))^2,y))
+        R2=1-(SELine/SEYmean)
+
+        pr ? println(" **Logarithmic Regression \n form y = m Log10(x)+b \n m=$m \n b=$b \n r2=$R2") : :none
+        return m, b, R2
     end
 
 end
