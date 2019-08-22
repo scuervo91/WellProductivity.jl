@@ -1,4 +1,7 @@
 julia 1.1
-RecipesBase
-Plots
-Polynomials
+PyPlot v2.8.1
+Colors v0.9.5
+Distributions v0.17.0
+Plots v0.24.0
+Statistics
+DataFrames v0.17.1

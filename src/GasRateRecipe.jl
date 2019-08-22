@@ -29,19 +29,19 @@ The next table show the list of variables allowed:
         d = Dates.format.(r,dft)
     else
         if Monthly==true
-        r = Dlim[1]:Dates.Month(mrange):Dlim[2]
-    else
-        r= Dlim[1]:Dates.Day(mrange):Dlim[2]
+            r = Dlim[1]:Dates.Month(mrange):Dlim[2]
+        else
+            r= Dlim[1]:Dates.Day(mrange):Dlim[2]
 
-    end
-        d = Dates.format.(r,dft)
+        end
+    d = Dates.format.(r,dft)
     end
 
         @series begin
         seriestype := :path
-        linestyle := :solid
-        linewidth := 2
-        seriescolor := RGB(0.6, 0.0, 0.0)
+        linestyle --> :solid
+        linewidth --> 2
+        seriescolor --> :red
         ylabel := "Gas Rate [Mscfd]"
         xticks := (r,d)
 

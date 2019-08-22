@@ -30,7 +30,7 @@ The next table show the list of variables allowed:
 ```
 @userplot OilRate
 
-@recipe function f(h::OilRate; Dlim=false, mrange=6, dft="u yy",
+@recipe function f(h::OilRate; Dlim=false,Monthly=true, mrange=6, dft="u yy",
                                 Liquid=false,
                                 Dec=false, Drange=false,
                                 Forecast=false, Mforecast=12,
@@ -70,12 +70,33 @@ The next table show the list of variables allowed:
         else
             f=x[end]+Dates.Month(1)
         end
-    else 
+    else
         f=x[end]+Dates.Month(1)
     end
 
+####
+if Dlim==false
+    if Monthly==true
+      r = x[1]:Dates.Month(mrange):f
+  else
+     r = x[1]:Dates.Day(mrange):f
+   end
+    d = Dates.format.(r,dft)
+else
+    if Monthly==true
+        r = Dlim[1]:Dates.Month(mrange):f
+    else
+        r= Dlim[1]:Dates.Day(mrange):f
 
-
+    end
+d = Dates.format.(r,dft)
+end
+xticks := (r,d)
+if Dlim!=false
+xlim := (Dates.value(Dlim[1]),Dates.value(Dlim[2]))
+end
+###
+#=
     if Dlim==false
         r = x[1]:Dates.Month(mrange):f
         d = Dates.format.(r,dft)
@@ -85,11 +106,11 @@ The next table show the list of variables allowed:
         xlim := (Dates.value(Dlim[1]),Dates.value(f))
     end
         xticks := (r,d)
-
+=#
     #Oil rate Series
     @series begin
         seriestype := :path
-        linewidth := 3
+        linewidth --> 3
         seriescolor --> :green
 
         label := "Oil Rate [bbl/d]"
@@ -100,10 +121,10 @@ The next table show the list of variables allowed:
     #Liquid rate Series
     @series begin
         seriestype := :path
-        linewidth := 1
-        seriescolor := RGB(0.5, 0.5, 0.5)
+        linewidth --> 1
+        seriescolor --> RGB(0.5, 0.5, 0.5)
         subplot := 1
-        label := "Liquid Rate [bbl/d]"
+        label --> "Liquid Rate [bbl/d]"
         x, z
         end
     end
@@ -111,8 +132,8 @@ The next table show the list of variables allowed:
     if Dec==true
         @series begin
             seriestype := :path
-            linewidth := 3
-            seriescolor := :red
+            linewidth --> 3
+            seriescolor --> :red
             lab := "Di = $(round(S.Di*365/12,digits=2)) Monthly // $(round(S.Di*365,digits=2)) Annually"
             DecTime, DecLine
         end
@@ -122,9 +143,9 @@ The next table show the list of variables allowed:
 
         @series begin
             seriestype := :path
-            linestyle := :dash
-            linewidth := 1
-            seriescolor := :red
+            linestyle --> :dash
+            linewidth --> 1
+            seriescolor --> :red
                 lab := "$(Dates.format(ForecastTime[1],dft))--> $(Dates.format(ForecastTime[end],dft))// Np= $(round(Np,digits=1)) Mbbl))"
                 ForecastTime, ForecastLine
         end
